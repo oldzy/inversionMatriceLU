@@ -15,7 +15,9 @@ namespace inversionMatriceLU
             double[,] m2 = { { 1, 1, 1 }, { 1, 1, 2 }, { 1, 2, 2 } };
             MatriceCarre test2 = new MatriceCarre(m2);
 
-            Console.WriteLine(test1+test2);
+            Console.WriteLine(test1 != test2);
+            Console.WriteLine(DecompositionLU.Inversion(test2)["A"]);
+            Console.WriteLine(DecompositionLU.Inversion(test2)["L"]);
         }
     }
 }
