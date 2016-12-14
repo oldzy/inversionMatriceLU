@@ -1,1 +1,6 @@
 D:\Users\Kamal\MEGA\cours\Math\projet\inversionMatriceLU\inversionMatriceLU\bin\Debug\inversionMatriceLU.exe.config
+D:\Users\Kamal\MEGA\cours\Math\projet\inversionMatriceLU\inversionMatriceLU\bin\Debug\inversionMatriceLU.exe
+D:\Users\Kamal\MEGA\cours\Math\projet\inversionMatriceLU\inversionMatriceLU\bin\Debug\inversionMatriceLU.pdb
+D:\Users\Kamal\MEGA\cours\Math\projet\inversionMatriceLU\inversionMatriceLU\obj\Debug\inversionMatriceLU.csprojResolveAssemblyReference.cache
+D:\Users\Kamal\MEGA\cours\Math\projet\inversionMatriceLU\inversionMatriceLU\obj\Debug\inversionMatriceLU.exe
+D:\Users\Kamal\MEGA\cours\Math\projet\inversionMatriceLU\inversionMatriceLU\obj\Debug\inversionMatriceLU.pdb
