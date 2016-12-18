@@ -43,7 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DecompositionLU.cs" />
+    <Compile Include="Inversion.cs" />
     <Compile Include="MatriceCarre.cs" />
     <Compile Include="PasMatriceCarreException.cs" />
     <Compile Include="Program.cs" />
