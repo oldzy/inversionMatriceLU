@@ -12,18 +12,21 @@ namespace inversionMatriceLU
         {
             double[,] m1 = { { 1, 0, 0, 1, 0, 1 }, { -1, 0, 0, 2, 0, 2 }, { 0, 1, 2, 0, 2, 0 }, { 0, -1, 1, 0, 1, 0 }, { 0, 0, 3, 0, -3, 0 }, { 0, 0, 0, 3, 0, -3 } };
             MatriceCarre test1 = new MatriceCarre(m1);
-            double[,] m2 = { { 1, 1, 1 }, { 1, 1, 2 }, { 1, 2, 2 } };
+            double[,] m2 = { { 1, 1, 1 }, { 1, 1, 2 }, { 2, 2, 3 } };
             MatriceCarre test2 = new MatriceCarre(m2);
-            MatriceCarre test3 = new MatriceCarre(10, MatriceCarre.UNITE);
+            double[,] m3 = { { 0.001, 2 }, { 1, 1 } };
+            MatriceCarre test3 = new MatriceCarre(m3);
             MatriceCarre test4 = new MatriceCarre(3, MatriceCarre.NULL);
 
-            /*Console.WriteLine(test1 != test2);
-            Console.WriteLine(test3);
-            Console.WriteLine(test4);*/
-            //Console.WriteLine(Inversion.Inversion(test2)["A"]);
-            //Console.WriteLine(Inversion.Inversion(test2)["L"]);
-            Inversion inv = new Inversion(test2);
-            Console.WriteLine(inv.DecompositionLU());
+            Console.WriteLine(test1);
+            try
+            {
+                InversionLU inv = new InversionLU(test1);
+                Console.WriteLine(inv.Inverse);
+            }catch(ApplicationException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
         }
     }
 }

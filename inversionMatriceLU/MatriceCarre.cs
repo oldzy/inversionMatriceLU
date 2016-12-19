@@ -11,7 +11,7 @@ namespace inversionMatriceLU
         public static readonly int NULL = 0;
         public static readonly int UNITE = 1;
         public static readonly string format = null;
-        public static int precision = 2; //Precision par défaut
+        public static int precision = 3; //Precision par défaut
 
         #region CONSTRUCTEUR STATIQUE
 
@@ -29,7 +29,7 @@ namespace inversionMatriceLU
 
         private double[,] matrice = null;
 
-        private int deg = 0;
+        private int ordre = 0;
 
         #region PROPRIETES
 
@@ -41,13 +41,13 @@ namespace inversionMatriceLU
                 if (value.GetLength(0) == value.GetLength(1))
                     matrice = value;
                 else
-                    throw new PasMatriceCarreException("La matrice entrée en paramètre n'est pas carrée");
+                    throw new ApplicationException("La matrice entrée en paramètre n'est pas carrée");
             }
         }
 
-        public int Deg
+        public int Ordre
         {
-            get { return deg; }
+            get { return ordre; }
         }
 
         #endregion
@@ -57,7 +57,7 @@ namespace inversionMatriceLU
         public MatriceCarre(int n, int type)
         {
             Matrice = new double[n, n];
-            deg = n;
+            ordre = n;
             if(type == UNITE)
                 for (int i = 0; i < n; i++)
                     Matrice[i, i] = 1;
@@ -68,9 +68,9 @@ namespace inversionMatriceLU
             try
             {
                 Matrice = (double[,])m.Clone();
-                deg = m.GetLength(0);
+                ordre = m.GetLength(0);
             }
-            catch(PasMatriceCarreException ex)
+            catch(ApplicationException ex)
             {
                 throw ex;
             }
@@ -80,11 +80,11 @@ namespace inversionMatriceLU
 
         public MatriceCarre Transpose()
         {
-            MatriceCarre res = new MatriceCarre(Deg, NULL);
+            MatriceCarre res = new MatriceCarre(ordre, NULL);
 
-            for (int i = 0; i < Deg; i++)
+            for (int i = 0; i < ordre; i++)
             {
-                for (int j = 0; j < Deg; j++)
+                for (int j = 0; j < ordre; j++)
                 {
                     res.Matrice[i, j] = Matrice[j, i];
                 }
@@ -97,10 +97,10 @@ namespace inversionMatriceLU
 
         public static MatriceCarre operator +(MatriceCarre m, double n)
         {
-            MatriceCarre res = new MatriceCarre(m.Deg, NULL);
-            for (int i = 0; i < m.Deg; i++)
+            MatriceCarre res = new MatriceCarre(m.ordre, NULL);
+            for (int i = 0; i < m.ordre; i++)
             {
-                for (int j = 0; j < m.Deg; j++)
+                for (int j = 0; j < m.ordre; j++)
                 {
                     res.Matrice[i, j] = m.Matrice[i, j] + n;
                 }
@@ -110,12 +110,12 @@ namespace inversionMatriceLU
         public static MatriceCarre operator +(MatriceCarre m1, MatriceCarre m2)
         {
             MatriceCarre res = null;
-            if (m1.Deg == m2.Deg)
+            if (m1.ordre == m2.ordre)
             {
-                res = new MatriceCarre(m1.Deg, NULL);
-                for (int i = 0; i < m1.Deg; i++)
+                res = new MatriceCarre(m1.ordre, NULL);
+                for (int i = 0; i < m1.ordre; i++)
                 {
-                    for (int j = 0; j < m1.Deg; j++)
+                    for (int j = 0; j < m1.ordre; j++)
                     {
                         res.Matrice[i, j] = m1.Matrice[i, j] + m2.Matrice[i, j];
                     }
@@ -125,10 +125,10 @@ namespace inversionMatriceLU
         }
         public static MatriceCarre operator -(MatriceCarre m, double n)
         {
-            MatriceCarre res = new MatriceCarre(m.Deg, NULL);
-            for (int i = 0; i < m.Deg; i++)
+            MatriceCarre res = new MatriceCarre(m.ordre, NULL);
+            for (int i = 0; i < m.ordre; i++)
             {
-                for (int j = 0; j < m.Deg; j++)
+                for (int j = 0; j < m.ordre; j++)
                 {
                     res.Matrice[i, j] = m.Matrice[i, j] - n;
                 }
@@ -138,12 +138,12 @@ namespace inversionMatriceLU
         public static MatriceCarre operator -(MatriceCarre m1, MatriceCarre m2)
         {
             MatriceCarre res = null;
-            if (m1.Deg == m2.Deg)
+            if (m1.ordre == m2.ordre)
             {
-                res = new MatriceCarre(m1.Deg, NULL);
-                for (int i = 0; i < m1.Deg; i++)
+                res = new MatriceCarre(m1.ordre, NULL);
+                for (int i = 0; i < m1.ordre; i++)
                 {
-                    for (int j = 0; j < m1.Deg; j++)
+                    for (int j = 0; j < m1.ordre; j++)
                     {
                         res.Matrice[i, j] = m1.Matrice[i, j] - m2.Matrice[i, j];
                     }
@@ -153,10 +153,10 @@ namespace inversionMatriceLU
         }
         public static MatriceCarre operator *(MatriceCarre m, double n)
         {
-            MatriceCarre res = new MatriceCarre(m.Deg, NULL);
-            for (int i = 0; i < m.Deg; i++)
+            MatriceCarre res = new MatriceCarre(m.ordre, NULL);
+            for (int i = 0; i < m.ordre; i++)
             {
-                for (int j = 0; j < m.Deg; j++)
+                for (int j = 0; j < m.ordre; j++)
                 {
                     res.Matrice[i, j] = m.Matrice[i, j] * n;
                 }
@@ -166,15 +166,15 @@ namespace inversionMatriceLU
         public static MatriceCarre operator *(MatriceCarre m1, MatriceCarre m2)
         {
             MatriceCarre res = null;
-            if (m1.Deg == m2.Deg)
+            if (m1.ordre == m2.ordre)
             {
-                res = new MatriceCarre(m1.Deg, NULL);
-                for (int i = 0; i < m1.Deg; i++)
+                res = new MatriceCarre(m1.ordre, NULL);
+                for (int i = 0; i < m1.ordre; i++)
                 {
-                    for (int j = 0; j < m1.Deg; j++)
+                    for (int j = 0; j < m1.ordre; j++)
                     {
                         res.Matrice[i, j] = 0;
-                        for (int k = 0; k < m1.Deg; k++)
+                        for (int k = 0; k < m1.ordre; k++)
                         {
                             res.Matrice[i, j] += m1.Matrice[i, k] * m2.Matrice[k, j];
                         }
@@ -188,10 +188,10 @@ namespace inversionMatriceLU
             MatriceCarre res = null;
             if (n != 0)
             {
-                res = new MatriceCarre(m.Deg, NULL);
-                for (int i = 0; i < m.Deg; i++)
+                res = new MatriceCarre(m.ordre, NULL);
+                for (int i = 0; i < m.ordre; i++)
                 {
-                    for (int j = 0; j < m.Deg; j++)
+                    for (int j = 0; j < m.ordre; j++)
                     {
                         res.Matrice[i, j] = m.Matrice[i, j] / n;
                     }
@@ -219,9 +219,9 @@ namespace inversionMatriceLU
         public override string ToString()
         {
             StringBuilder res = new StringBuilder();
-            for (int i = 0; i < Deg; i++)
+            for (int i = 0; i < ordre; i++)
             {
-                for (int j = 0; j < Deg; j++)
+                for (int j = 0; j < ordre; j++)
                 {
                     res.Append(string.Format(format, Matrice[i, j]) + " ");
                 }
@@ -237,11 +237,11 @@ namespace inversionMatriceLU
                 res = false;
             else
             {
-                if (Deg == m.Deg)
+                if (ordre == m.ordre)
                 {
-                    for (int i = 0; i < Deg; i++)
+                    for (int i = 0; i < ordre; i++)
                     {
-                        for (int j = 0; j < Deg; j++)
+                        for (int j = 0; j < ordre; j++)
                         {
                             if (Matrice[i, j] != m.Matrice[i, j])
                                 res = false;
@@ -256,9 +256,9 @@ namespace inversionMatriceLU
         public override int GetHashCode()
         {
             int res = 0;
-            for (int i = 0; i < Deg; i++)
+            for (int i = 0; i < ordre; i++)
             {
-                for (int j = 0; j < Deg; j++)
+                for (int j = 0; j < ordre; j++)
                 {
                     res += Matrice[i, j].GetHashCode();
                 }

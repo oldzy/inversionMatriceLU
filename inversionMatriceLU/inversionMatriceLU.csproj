@@ -43,9 +43,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Inversion.cs" />
+    <Compile Include="InversionLU.cs" />
     <Compile Include="MatriceCarre.cs" />
-    <Compile Include="PasMatriceCarreException.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
