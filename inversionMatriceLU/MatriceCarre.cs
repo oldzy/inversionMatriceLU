@@ -90,7 +90,7 @@ namespace inversionMatriceLU
                 Matrice = (double[,])m.Clone();
                 ordre = m.GetLength(0);
             }
-            catch (ApplicationException ex)
+            catch (MatriceCarreException ex)
             {
                 throw ex;
             }
