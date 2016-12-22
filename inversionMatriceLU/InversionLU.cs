@@ -87,13 +87,20 @@ namespace inversionMatriceLU
             L = new MatriceCarre(A.Ordre, MatriceCarre.NULL);
             U = new MatriceCarre(A.Matrice);
             p = 0;
-            Inversion();
         }
 
-        private void Inversion()
+        public void Inversion()
         {
+            string message = " -----------\n| Matrice A |\n -----------\n" + A.ToString() + "\n";
+            Console.Clear();
+            Fichier.ViderFichier("output.txt");
+            Console.WriteLine(message);
+            Fichier.Ecrire("output.txt", message);
             if (Decomposition())
             {
+                message = " -----------------------------------------------------\n| Vérification de la décomposition => A = P^t * L * U |\n -----------------------------------------------------\n" + (P.Transpose()*L*U).ToString();
+                Console.WriteLine(message);
+                Fichier.Ecrire("output.txt", message);
                 CalculDeterminant();
                 if (Determinant != 0)
                 {
@@ -101,16 +108,22 @@ namespace inversionMatriceLU
                     Y = new MatriceCarre(U.Matrice);
                     InversionL();
                     InversionU();
+                    message = " ------\n| L^-1 |\n ------\n" + X.ToString() + "\n" + " ------\n| U^-1 |\n ------\n" + Y.ToString() + "\n";
+                    Console.WriteLine(message);
+                    Fichier.Ecrire("output.txt", message);
                     Inverse = Y * X * P;
+                    message = " -------------------\n| A^-1 => Y * X * P |\n -------------------\n" + Inverse.ToString() + "\n";
+                    Console.WriteLine(message);
+                    Fichier.Ecrire("output.txt", message);
                 }
                 else
                 {
-                    throw new ApplicationException("Cette matrice ne peut pas être inversée car son déterminant est égal à zéro");
+                    throw new DeterminantException("Cette matrice ne peut pas être inversée car son déterminant est égal à zéro", Determinant);
                 }
             }
             else
             {
-                throw new ApplicationException("La décompostion LU n'a pas pu être calculée.");
+                throw new DecompositionException("La décompostion LU n'a pas pu être calculée.");
             }
 
         }
@@ -149,6 +162,8 @@ namespace inversionMatriceLU
         private bool Decomposition()
         {
             bool quitter = false;
+            Console.WriteLine(" ------------------\n| Décomposition LU |\n ------------------\n");
+            Fichier.Ecrire("output.txt", " ------------------\n| Décomposition LU |\n ------------------\n");
             for (int k = 0; !quitter && k < A.Ordre - 1; k++)
             {
                 for (int i = k + 1; !quitter && i < A.Ordre; i++)
@@ -177,12 +192,12 @@ namespace inversionMatriceLU
                         U.Matrice[i, j] = U.Matrice[i, j] - (L.Matrice[i, k] * U.Matrice[k, j]);
                     }
                 }
+                string message = "Étape " + (k + 1) + "\n-------\n" + " -----------\n| Matrice L |\n ----------- \n" + L.Diagonale1().ToString() + "\n" + " -----------\n| Matrice U |\n ----------- \n" + U.ToString() + "\n" + " -----------\n| Matrice P |\n ----------- \n" + P.ToString();
+                Console.WriteLine(message);
+                Fichier.Ecrire("output.txt", message);
             }
 
-            for (int i = 0; i < A.Ordre; i++)
-            {
-                L.Matrice[i, i] = 1;
-            }
+            L = L.Diagonale1();
             return A == P.Transpose() * L * U;
         }
 

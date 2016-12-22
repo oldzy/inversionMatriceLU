@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace inversionMatriceLU
 {
-    class Program
+    class DecompositionException : ApplicationException
     {
-        static void Main(string[] args)
+        public DecompositionException(string message) : base(message)
         {
-            Menu.Demarrer();
+
         }
     }
 }

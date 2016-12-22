@@ -10,8 +10,28 @@ namespace inversionMatriceLU
     {
         public static readonly int NULL = 0;
         public static readonly int UNITE = 1;
-        public static readonly string format = null;
-        public static int precision = 3; //Precision par défaut
+        private static string format = null;
+
+        private static int precision = 3;//Precision par défaut
+
+        #region PROPRIETES STATIQUES
+
+        public static int Precision
+        {
+            get { return precision; }
+            set
+            {
+                precision = value;
+                StringBuilder res = new StringBuilder();
+                for (int i = 0; i < precision; i++)
+                {
+                    res.Append("0");
+                }
+                format = "{0," + (precision + 3) + ":0." + res.ToString() + "}";
+            }
+        }
+
+        #endregion
 
         #region CONSTRUCTEUR STATIQUE
 
@@ -41,7 +61,7 @@ namespace inversionMatriceLU
                 if (value.GetLength(0) == value.GetLength(1))
                     matrice = value;
                 else
-                    throw new ApplicationException("La matrice entrée en paramètre n'est pas carrée");
+                    throw new MatriceCarreException("La matrice entrée en paramètre n'est pas carrée");
             }
         }
 
@@ -58,7 +78,7 @@ namespace inversionMatriceLU
         {
             Matrice = new double[n, n];
             ordre = n;
-            if(type == UNITE)
+            if (type == UNITE)
                 for (int i = 0; i < n; i++)
                     Matrice[i, i] = 1;
         }
@@ -70,7 +90,7 @@ namespace inversionMatriceLU
                 Matrice = (double[,])m.Clone();
                 ordre = m.GetLength(0);
             }
-            catch(ApplicationException ex)
+            catch (ApplicationException ex)
             {
                 throw ex;
             }
@@ -92,7 +112,19 @@ namespace inversionMatriceLU
 
             return res;
         }
-        
+
+        public MatriceCarre Diagonale1()
+        {
+            MatriceCarre res = new MatriceCarre(Matrice);
+
+            for (int i = 0; i < res.Ordre; i++)
+            {
+                res.Matrice[i, i] = 1;
+            }
+
+            return res;
+        }
+
         #region SURCHARGE OPERATEUR
 
         public static MatriceCarre operator +(MatriceCarre m, double n)

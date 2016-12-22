@@ -6,11 +6,10 @@ using System.Threading.Tasks;
 
 namespace inversionMatriceLU
 {
-    class Program
+    class MatriceCarreException : ApplicationException
     {
-        static void Main(string[] args)
+        public MatriceCarreException(string message) : base(message)
         {
-            Menu.Demarrer();
         }
     }
 }
