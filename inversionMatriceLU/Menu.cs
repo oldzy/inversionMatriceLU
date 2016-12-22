@@ -9,7 +9,7 @@ namespace inversionMatriceLU
 {
     public static class Menu
     {
-        public static void Demarrer()
+        public static bool Demarrer()
         {
             Console.Clear();
             if (Question("La précision par défaut est de 3.\nVoulez vous spécifier une autre précision? ([O]ui/[N]on) : ", true))
@@ -63,8 +63,7 @@ namespace inversionMatriceLU
                     Console.WriteLine(ex.Message);
                 }
             }
-            if (Question("Voulez-vous relancer le programme? ([O]ui/[N]on) : ", false))
-                Demarrer();
+            return Question("Voulez-vous relancer le programme? ([O]ui/[N]on) : ", false);
         }
 
         private static bool ChoixPrecision()

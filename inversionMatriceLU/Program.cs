@@ -10,7 +10,7 @@ namespace inversionMatriceLU
     {
         static void Main(string[] args)
         {
-            Menu.Demarrer();
+            while (Menu.Demarrer()) { };
         }
     }
 }
